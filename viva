@@ -1,0 +1,93 @@
+
+package viva;
+
+import java.util.Scanner;
+public class Viva {
+
+    public static void main(String[] args) {
+   
+        Scanner sc = new Scanner(System.in); //TO HANDLE INPUT
+        boolean Valid=true; //AS A CHECK FOR ALL CONSTRAINTS
+        boolean noWordCheck=true; //TO CHECK IF THERE IS AT LEAST ANOTHER WORD OTHER THAN REMIX
+        String song; //STORE INPUT
+        
+        System.out.println("Enter the remix: "); //INPUT
+        song = sc.nextLine();
+        
+        //CHECK IF INPUT IS EMPTY
+        if (song.length()==0){
+            System.out.println("The input should not be empty.");
+            Valid=false;
+        }
+        
+        //CHECK IF INPUT IS MORE THAN 200 CHARACTERS
+        if(song.length()>200){
+            System.out.println("The input should not be more than 200 characters.");
+            Valid=false;
+        }
+        
+        //CHECK INPUT CONSIST OF UPPERCASE ENGLISH LETTERS ONLY
+        for(int i=0 ; i<song.length();i++){
+            if (song.charAt(i)<'A' || song.charAt(i)>'Z'){
+                System.out.println("The input should consist of only uppercase English letters.");
+                Valid=false;
+                break;
+            }
+        }
+        
+        //CHECK IF INPUT HAVE NO WORDS OTHER THAN REMIX
+        for(int i = 0; i<song.length(); i++){
+            
+            if ( i+4 < song.length() &&     //TO PREVENT OUT OF BOUND ERROR
+                 song.charAt(i)== 'R' && 
+                 song.charAt(i+1)== 'E' && 
+                 song.charAt(i+2)== 'M' &&   //CHECK IF THERE IS A SEQUENCE OF REMIX
+                 song.charAt(i+3)== 'I' && 
+                 song.charAt(i+4)== 'X'){ 
+                
+                    i+=4; //SKIP THE REMIX WORD
+                }
+            else{
+                noWordCheck=false; //PRESENCE OF WORD THAT IS NOT REMIX
+                break;
+            }
+        }
+        
+        if(Valid){ //IF INPUT PASSES ALL CONSTRAINTS
+            if (noWordCheck){ 
+                System.out.println("The song should have at least one original word other than REMIX. ");
+            }
+        }
+        
+        //PRINTING THE ORIGINAL SONG IF IT PASSES ALL CONSTRAINTS
+        if(Valid){
+            for (int i = 0;i< song.length();i++){
+                
+                if ( i+4 < song.length() && //TO PREVENT OUT OF BOUND ERROR
+                     song.charAt(i)== 'R' && 
+                     song.charAt(i+1)== 'E' && 
+                     song.charAt(i+2)== 'M' && //CHECK FOR SEQUENCE OF REMIX
+                     song.charAt(i+3)== 'I' && 
+                     song.charAt(i+4)== 'X'){
+                    
+                    i+=4; //SKIP THE WORD REMIX
+                }
+                else{
+                    System.out.print(song.charAt(i)); //PRINT LETTER AT CURRENT INDEX
+                    
+                    if(i+5 < song.length() && //TO PREVENT OUT OF BOUND ERROR
+                       song.charAt(i+1)=='R' && 
+                       song.charAt(i+2)== 'E' && 
+                       song.charAt(i+3)== 'M' && //CHECK FOR SEQUENCE OF REMIX
+                       song.charAt(i+4)== 'I' && 
+                       song.charAt(i+5)== 'X'){
+                        
+                        System.out.print(" "); /*ADD SPACE BEFORE NEXT WORD   
+                                                IF IT IS REMIX*/
+                    }
+                }  
+            }
+        }
+        System.out.println(" "); //ADD NEW LINE FOR CLEARER OUTPUT
+    }
+}
